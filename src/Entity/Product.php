@@ -25,11 +25,8 @@ class Product
     #[ORM\Column(length: 255)]
     private ?string $publisher = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $owner = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $log = null;
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    private ?user $owner = null;
 
     public function getId(): ?int
     {
@@ -84,26 +81,14 @@ class Product
         return $this;
     }
 
-    public function getOwner(): ?string
+    public function getOwner(): ?user
     {
         return $this->owner;
     }
 
-    public function setOwner(string $owner): static
+    public function setOwner(?user $owner): static
     {
         $this->owner = $owner;
-
-        return $this;
-    }
-
-    public function getLog(): ?string
-    {
-        return $this->log;
-    }
-
-    public function setLog(?string $log): static
-    {
-        $this->log = $log;
 
         return $this;
     }
