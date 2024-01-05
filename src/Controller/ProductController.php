@@ -44,7 +44,7 @@ class ProductController extends AbstractController
 
             $products = $entityManager->getRepository(Product::class)->findAll();
 
-            return $this->render('product/show_all.html.twig', [
+            return $this->redirectToRoute('app_products', [
                 "product" => $product,
                 "products" => $products
             ]);
@@ -58,12 +58,12 @@ class ProductController extends AbstractController
             "products" => $products
         ]);
     }
-    #[Route('/product/show', name: 'app_products')]
+    #[Route('/product/show_all', name: 'app_products')]
     public function showAllProducts(EntityManagerInterface $entityManager): Response
     {
         $products = $entityManager->getRepository(Product::class)->findAll();
 
-        return $this->render('product/show_all.html.twig.html.twig', [
+        return $this->render('product/show_all.html.twig', [
             'products' => $products,
         ]);
     }
