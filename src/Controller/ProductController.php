@@ -15,17 +15,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProductController extends AbstractController
 {
-    #[Route('/product', name: 'app_product')]
-    public function index(): JsonResponse
-    {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/ProductController.php',
-        ]);
-    }
     #[Route('/product/create/form', name: 'app_product_create_form')]
-    public function creationForm(Request $request, EntityManagerInterface $entityManager): Response
+    public function creationForm(Request $request, EntityManagerInterface $entityManager,Security $security): Response
     {
+        $user = $security->getUser();
         $product = new Product();
         $form = $this->createFormBuilder($product)
             ->add('name', )
@@ -39,12 +32,13 @@ class ProductController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $product = $form->getData();
+            $product->setOwner($user);
             $entityManager->persist($product);
             $entityManager->flush();
 
             $products = $entityManager->getRepository(Product::class)->findAll();
 
-            return $this->redirectToRoute('app_products', [
+            return $this->redirectToRoute('app_products_user', [
                 "product" => $product,
                 "products" => $products
             ]);
@@ -52,7 +46,7 @@ class ProductController extends AbstractController
 
         $products = $entityManager->getRepository(Product::class)->findAll();
 
-        return $this->render('product/add_game.html.twig', [
+        return $this->render('product/game_create_form.html.twig', [
             'form' => $form->createView(),
             "product" => $product,
             "products" => $products
@@ -67,4 +61,16 @@ class ProductController extends AbstractController
             'products' => $products,
         ]);
     }
+    #[Route('/product/user', name: 'app_products_user')]
+    public function showUserProducts(Security $security, EntityManagerInterface $entityManager): Response
+    {
+
+        $user = $security->getUser();
+
+        $products = $entityManager->getRepository(Product::class)->findBy(['owner' => $user]);
+
+        return $this->render('product/show_user.html.twig', [
+            'products' => $products,
+        ]);
+}
 }
