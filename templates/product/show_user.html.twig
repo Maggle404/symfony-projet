@@ -1,0 +1,16 @@
+
+
+{% block body %}
+    <h1>Liste des produits appartenant a {{ app.user.username }}</h1>
+
+    <ul>
+        {% for product in products %}
+            <li>
+                <strong>Name:</strong> {{ product.name }}<br>
+                <strong>Price:</strong> {{ product.price }} €<br>
+                <strong>Platform:</strong> {{ product.platform }}<br>
+                <strong>Publisher:</strong> {{ product.publisher }}<br>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
