@@ -1,0 +1,21 @@
+{% block body %}
+    <div>
+        <h2>info de produit</h2>
+        <div>
+            <span>Nom:</span>
+            <span>{{ product.name }}</span>
+        </div>
+        <div>
+            <span>Prix:</span>
+            <span>{{ product.price }}</span>
+        </div>
+        <div>
+            <span>Plateforme:</span>
+            <span>{{ product.platform }}</span>
+        </div>
+        <div>
+            <span>Éditeur:</span>
+            <span>{{ product.publisher }}</span>
+        </div>
+    </div>
+{% endblock %}

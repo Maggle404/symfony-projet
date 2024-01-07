@@ -72,5 +72,54 @@ class ProductController extends AbstractController
         return $this->render('product/show_user.html.twig', [
             'products' => $products,
         ]);
-}
+    }
+    #[Route('/product/show/{id}', name: 'app_player_show')]
+    public function show(Product $product, EntityManagerInterface $entityManager): Response
+    {
+        $products = $entityManager->getRepository(Product::class)->findAll();
+        return $this->render('product/show_id.html.twig', ["product" => $product, "products" => $products,]);
+    }
+    #[Route('/product/delete/{id}', name: 'app_product_delete')]
+    public function delete(EntityManagerInterface $entityManager, Product $product): Response
+    {
+        $entityManager->remove($product);
+        $entityManager->flush();
+
+        return $this -> redirectToRoute("app_products");
+    }
+    #[Route('/product/update/{id}', name: "product_formulaire_update")]
+    public function update(int $id, EntityManagerInterface $entityManager): Response
+    {
+        $product = $entityManager->getRepository(Product::class)->find($id);
+        return $this->render('product/game_update_form.html.twig', [
+            'product' => $product,
+        ]);
+    }
+    #[Route('/product/update_form/{id}', name: "product_update_form")]
+    public function updateForm(EntityManagerInterface $entityManager, int $id, Request $request): Response
+    {
+        $product = $entityManager->getRepository(Product::class)->find($id);
+
+
+        $form = $this->createFormBuilder($product)
+            ->add('name')
+            ->add('price')
+            ->add('platform')
+            ->add('publisher')
+            ->add('save', SubmitType::class, ['label' => 'Update Product'])
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            $products = $entityManager->getRepository(Product::class)->findAll();
+            return $this->render('product/show_all.html.twig', ["products" => $products]);
+        }
+
+        return $this->render('product/game_update_form.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
 }
