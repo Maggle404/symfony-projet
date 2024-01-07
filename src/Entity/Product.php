@@ -26,7 +26,7 @@ class Product
     private ?string $publisher = null;
 
     #[ORM\ManyToOne(inversedBy: 'products')]
-    private ?user $owner = null;
+    private ?User $owner = null;
 
     public function getId(): ?int
     {
