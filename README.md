@@ -4,7 +4,7 @@ TODO :
 
 ~~fonction pour voir un jeu selon son id~~ (function show)
 
-~~fonction pour editer un jeu~~ (function update + updtaeForm)
+~~fonction pour editer un jeu~~ (function update + updateForm)
 
 tout le css (aled)
 
@@ -21,9 +21,9 @@ admin peut :
 - supprimer un utilisateur
 - modifier ?
 
-fonction pour afficher la liste des utilisateur
+~~fonction pour afficher la liste des utilisateur~~ (function showalluser)
 
-fonction pour supprimer un utilisateur
+~~fonction pour supprimer un utilisateur~~ (function delete)
 
 a voir...
 
