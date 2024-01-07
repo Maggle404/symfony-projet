@@ -2,7 +2,7 @@ TODO :
 
 fonction pour supprimer un jeu
 
-fonction pour voir un jeu selon son id
+~~fonction pour voir un jeu selon son id~~
 
 fonction pour editer un jeu
 
