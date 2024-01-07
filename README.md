@@ -1,10 +1,10 @@
 TODO : 
 
-fonction pour supprimer un jeu
+~~fonction pour supprimer un jeu~~ (function delete)
 
-~~fonction pour voir un jeu selon son id~~
+~~fonction pour voir un jeu selon son id~~ (function show)
 
-fonction pour editer un jeu
+~~fonction pour editer un jeu~~ (function update + updtaeForm)
 
 tout le css (aled)
 
