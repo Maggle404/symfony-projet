@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class UserController extends AbstractController{
@@ -25,16 +26,19 @@ class UserController extends AbstractController{
     $security->logout(false);
     return $this->redirectToRoute('app_login');
     }
+
     #[Route('/user/show_all', name: 'app_users')]
+    #[IsGranted('ROLE_Admin')]
     public function showAllUsers(EntityManagerInterface $entityManager): Response
     {
-        $users = $entityManager->getRepository(User::class)->findAll();
+        $users = $entityManager->getRepository(user::class)->findAll();
 
         return $this->render('user/show_all.html.twig', [
             'users' => $users,
         ]);
     }
     #[Route('/user/delete/{id}', name: 'app_user_delete')]
+    #[IsGranted('ROLE_Admin')]
     public function delete(EntityManagerInterface $entityManager, User $user): Response
     {
         $entityManager->remove($user);

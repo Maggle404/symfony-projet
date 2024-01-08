@@ -1,17 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Ajouter un utilisateur{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+    <h1>Ajouter un utilisateur</h1>
 
     {{ form_errors(registrationForm) }}
 
     {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.username) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
+        {{ form_row(registrationForm.plainPassword, {label: 'Mot de passe :'}) }}
+        <label>
+            <select name="role">
+                <option value="Admin">Admin</option>
+                <option value="Editeur">Editeur</option>
+            </select>
+        </label>
         {{ form_row(registrationForm.agreeTerms) }}
 
         <button type="submit" class="btn">Register</button>

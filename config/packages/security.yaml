@@ -1,4 +1,7 @@
 security:
+    role_hierarchy:
+        ROLE_Editeur: [ ROLE_Editeur ]
+        ROLE_Admin: [ ROLE_Admin ]
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
@@ -20,6 +23,8 @@ security:
             form_login:
                 login_path: app_login
                 check_path: app_login
+                always_use_default_target_path: true
+                default_target_path: product/show_all
             logout:
                 path: app_logout
                 target: app_login
@@ -33,11 +38,13 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+    # - { path: ^/admin, roles: ROLE_ADMIN }
+    # - { path: ^/profile, roles: ROLE_USER }
 
 when@test:
-    security:
+
+
+
         password_hashers:
             # By default, password hashers are resource intensive and take time. This is
             # important to generate secure password hashes. In tests however, secure hashes

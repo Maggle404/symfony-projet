@@ -12,12 +12,14 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ProductController extends AbstractController
 {
     #[Route('/product/create/form', name: 'app_product_create_form')]
     public function creationForm(Request $request, EntityManagerInterface $entityManager,Security $security): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
         $user = $security->getUser();
         $product = new Product();
         $form = $this->createFormBuilder($product)
@@ -55,6 +57,7 @@ class ProductController extends AbstractController
     #[Route('/product/show_all', name: 'app_products')]
     public function showAllProducts(EntityManagerInterface $entityManager): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
         $products = $entityManager->getRepository(Product::class)->findAll();
 
         return $this->render('product/show_all.html.twig', [
@@ -64,7 +67,7 @@ class ProductController extends AbstractController
     #[Route('/product/user', name: 'app_products_user')]
     public function showUserProducts(Security $security, EntityManagerInterface $entityManager): Response
     {
-
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
         $user = $security->getUser();
 
         $products = $entityManager->getRepository(Product::class)->findBy(['owner' => $user]);
@@ -76,12 +79,14 @@ class ProductController extends AbstractController
     #[Route('/product/show/{id}', name: 'app_player_show')]
     public function show(Product $product, EntityManagerInterface $entityManager): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
         $products = $entityManager->getRepository(Product::class)->findAll();
         return $this->render('product/show_id.html.twig', ["product" => $product, "products" => $products,]);
     }
     #[Route('/product/delete/{id}', name: 'app_product_delete')]
     public function delete(EntityManagerInterface $entityManager, Product $product): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
         $entityManager->remove($product);
         $entityManager->flush();
 
@@ -90,6 +95,7 @@ class ProductController extends AbstractController
     #[Route('/product/update/{id}', name: "product_formulaire_update")]
     public function update(int $id, EntityManagerInterface $entityManager): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
         $product = $entityManager->getRepository(Product::class)->find($id);
         return $this->render('product/game_update_form.html.twig', [
             'product' => $product,
@@ -98,8 +104,8 @@ class ProductController extends AbstractController
     #[Route('/product/update_form/{id}', name: "product_update_form")]
     public function updateForm(EntityManagerInterface $entityManager, int $id, Request $request): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
         $product = $entityManager->getRepository(Product::class)->find($id);
-
 
         $form = $this->createFormBuilder($product)
             ->add('name')
@@ -115,11 +121,12 @@ class ProductController extends AbstractController
             $entityManager->flush();
 
             $products = $entityManager->getRepository(Product::class)->findAll();
-            return $this->render('product/show_all.html.twig', ["products" => $products]);
+            return $this -> redirectToRoute("app_products", ["products" => $products]);
         }
 
         return $this->render('product/game_update_form.html.twig', [
             'form' => $form->createView(),
         ]);
     }
+
 }
