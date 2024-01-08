@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,5 +24,22 @@ class UserController extends AbstractController{
     public function logout($security): Response{
     $security->logout(false);
     return $this->redirectToRoute('app_login');
+    }
+    #[Route('/user/show_all', name: 'app_users')]
+    public function showAllUsers(EntityManagerInterface $entityManager): Response
+    {
+        $users = $entityManager->getRepository(User::class)->findAll();
+
+        return $this->render('user/show_all.html.twig', [
+            'users' => $users,
+        ]);
+    }
+    #[Route('/user/delete/{id}', name: 'app_user_delete')]
+    public function delete(EntityManagerInterface $entityManager, User $user): Response
+    {
+        $entityManager->remove($user);
+        $entityManager->flush();
+
+        return $this -> redirectToRoute("app_users");
     }
 }

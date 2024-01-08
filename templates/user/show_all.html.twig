@@ -1,0 +1,32 @@
+{# show_all_users.html.twig #}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>All Users</title>
+    </head>
+        <body>
+        <h1>All Users</h1>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Id utilisateur</th>
+                <th>Nom d'utilisateur</th>
+                <th>Roles</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>je sais pas comment l'afficher sans error</td>
+
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </body>
+</html>
