@@ -32,8 +32,76 @@
         width: 100px;
         color: #444;
     }
+    nav {
+        background-color: #f8f9fa;
+        padding: 10px 0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+    nav > div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .left-menu {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+    }
+
+    .left-menu li {
+        margin-right: 20px;
+    }
+
+    .left-menu li:last-child {
+        margin-right: 0;
+    }
+
+    .left-menu a {
+        text-decoration: none;
+        color: #333;
+        font-weight: bold;
+    }
+    .right-menu {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .right-menu li {
+        display: inline-block;
+    }
+
+    .right-menu a {
+        text-decoration: none;
+        color: #333;
+        font-weight: bold;
+    }
 
 </style>
+
+<header>
+    <nav>
+        <div class="container">
+            <ul class="left-menu">
+                <li><a href="{{ path('product/show_all') }}">Products</a></li>
+                {% if is_granted('ROLE_Admin') %}
+                    <li><a href="{{ path('app_users') }}">Users</a></li>
+                {% endif %}
+            </ul>
+
+            <ul class="right-menu">
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <li><a href="{{ path('app_logout') }}">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ path('app_login') }}">Login</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+</header>
 {% block body %}
         <div>
             <h2>info de produit</h2>
