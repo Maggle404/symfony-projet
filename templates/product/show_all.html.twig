@@ -10,6 +10,9 @@
         <th>Prix</th>
         <th>Platforme</th>
         <th>Éditeur</th>
+        {% if is_granted('ROLE_Admin') %}
+        <th>Supprimer</th>
+        {% endif %}
     </tr>
     </thead>
     <tbody>
@@ -19,6 +22,11 @@
             <td>{{ product.price }} €</td>
             <td>{{ product.platform }}</td>
             <td>{{ product.publisher }}</td>
+            {% if is_granted('ROLE_Admin') %}
+            <td>
+                <a href="{{ path('app_product_delete', {'id': product.id}) }}" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce produit ?')">Supprimer</a>
+            </td>
+            {% endif %}
         </tr>
     {% endfor %}
     </tbody>
