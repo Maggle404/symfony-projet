@@ -128,5 +128,11 @@ class ProductController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+    #[Route('/product/index', name: "product_index")]
+    public function index(EntityManagerInterface $entityManager): Response
+    {
+
+        return $this->render('product/index.html.twig');
+    }
 
 }
