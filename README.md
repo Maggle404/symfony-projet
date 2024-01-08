@@ -8,6 +8,8 @@ TODO :
 
 tout le css (aled)
 
+~~Route redirect Login --> mainpage~~
+
 la gestion des role, admin/editeur
 
 editeur peut : 
