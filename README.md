@@ -4,9 +4,11 @@ TODO :
 
 ~~fonction pour voir un jeu selon son id~~ (function show)
 
-~~fonction pour editer un jeu~~ (function update + updateForm)
+~~fonction pour editer un jeu~~ (function update + updtaeForm)
 
 tout le css (aled)
+
+~~Route redirect Login --> mainpage~~
 
 la gestion des role, admin/editeur
 
@@ -21,9 +23,9 @@ admin peut :
 - supprimer un utilisateur
 - modifier ?
 
-~~fonction pour afficher la liste des utilisateur~~ (function showalluser)
+fonction pour afficher la liste des utilisateur
 
-~~fonction pour supprimer un utilisateur~~ (function delete)
+fonction pour supprimer un utilisateur
 
 a voir...
 
